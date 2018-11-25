@@ -26,7 +26,7 @@ public class BGGenerationSet {
 	static ArrayList<StemList> s=new ArrayList<>(1090);
 	
 	//static ArrayList<slist> childlist=new ArrayList<>(1090);
-	int n=5; //Levels of the tree
+	int n=4; //Levels of the tree
 	
 	static int i=0;
 	// Output format 
@@ -36,6 +36,9 @@ public class BGGenerationSet {
 	}
 	// Growing tree 1
 	public void createStem1List(){
+
+		Pattern1 p1= new Pattern1();
+		/*
 		int angleDeviation=30; // angle deviation from the parent stem 
 		int multiplier=5;// for the height ratio of tree
 		
@@ -72,14 +75,16 @@ public class BGGenerationSet {
 		
 		}
 		
-		
+		//create new instance of class
 		
 	
-	}	
+	*/}	
 	
 	static int k=0;
 	
 	public void createStem2List(){
+		Pattern2 p2= new Pattern2();
+		/*
 		int angleDeviation=25; // angle deviation from the parent stem 
 		int offset=slist1.size(); // the id will start after the previous plant's id
 		int multiplier=10;// for the height ratio of tree
@@ -121,7 +126,7 @@ public class BGGenerationSet {
 			System.out.println(stem.toStringStem(iterator.next()));
 		
 		}
-		
+		*/
 		
 	
 	}
