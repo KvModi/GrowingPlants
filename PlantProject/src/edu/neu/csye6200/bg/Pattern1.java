@@ -3,7 +3,9 @@
  */
 package edu.neu.csye6200.bg;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author krishnamodi
@@ -42,10 +44,19 @@ public class Pattern1 extends BGGenerationSet {
 		Iterator<Stembg> iterator = slist1.iterator();
 		int j=0;
 		while (iterator.hasNext()) {
+			try {
+				TimeUnit.SECONDS.sleep(01);
+				System.out.println(stem.toStringStem(iterator.next()));
+				// how to call the draw method over here ???????????????????
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			System.out.println(stem.toStringStem(iterator.next()));
 		
 		}
+		
+		//return slist1;
 		
 		//create new instance of class
 		
