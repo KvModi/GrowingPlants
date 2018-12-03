@@ -10,7 +10,7 @@ import java.util.Iterator;
  *
  */
 public class Pattern2 extends BGGenerationSet{
-	BGCanvas canvas= new BGCanvas();
+	BGCanvas canvas= BGCanvas.getInstance();
 	public Pattern2(int treeLevel) {
 		int angleDeviation=25; // angle deviation from the parent stem 
 		int offset=slist1.size(); // the id will start after the previous plant's id

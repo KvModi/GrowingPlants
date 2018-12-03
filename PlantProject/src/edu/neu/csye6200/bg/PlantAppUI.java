@@ -76,7 +76,7 @@ public class PlantAppUI extends BGApp {
 
 	//Create a panel used for drawing
 		private JPanel getDrawPanel() {
-			drawPanel = new BGCanvas();
+			drawPanel = BGCanvas.getInstance();
 			return drawPanel;
 		}
 		

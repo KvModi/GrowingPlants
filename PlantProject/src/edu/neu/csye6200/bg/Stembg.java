@@ -20,11 +20,11 @@ public class Stembg {
 		id=-1;
 		x1=0;
 		y1=0;
-		angle=90;
+		angle=-90;
 		id=-1;
 		
-		x2=0*(int) (Math.cos(Math.toRadians(angle)) * (20-level) * 10.0);
-		y2=0*(int) (Math.sin(Math.toRadians(angle)) *(20-level) * 10.0);
+		x2=(int) (Math.cos(Math.toRadians(angle)) * (20-level) * 10.0);
+		y2=(int) (Math.sin(Math.toRadians(angle)) *(20-level) * 10.0);
 		length=(int)Math.sqrt((y2-y1)*(y2-y1)+(x2-x1)*(x2-x1));
 		
 	}
@@ -33,7 +33,7 @@ public class Stembg {
 		id=-1;
 		x1=0;
 		y1=0;
-		angle=90;
+		angle=-90;
 		id=-1;
 		x1=xin;
 		x2=yin;

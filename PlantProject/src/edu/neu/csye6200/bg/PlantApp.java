@@ -5,9 +5,11 @@ package edu.neu.csye6200.bg;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -39,8 +41,10 @@ public class PlantApp extends BGApp{
 	protected JButton decr = null;
 	protected JLabel label;
 	static int levelNo=3;
-    private BGCanvas bgPanel = null;
-	public BGGenerationSet bggs=null;
+	 ArrayList<Stembg> slist1;//=new ArrayList<>();
+		
+    private BGCanvas bgcanvas;// = BGCanvas.getInstance();
+	public BGGenerationSet bggs;
 	Thread t=null;
 	Thread t2=null;
     
@@ -52,10 +56,9 @@ public class PlantApp extends BGApp{
 		frame.setTitle("PlantApp");
 		menuMgr.createDefaultActions(); // Set up default menu items
 		showUI(); // Cause the Swing Dispatch thread to display the JFrame
-		BGGenerationSet bgg=new BGGenerationSet();
-		BGCanvas canvas=new BGCanvas();
-		bgg.addObserver(canvas);
+		slist1=new ArrayList<>();
 		
+
 
     }
    
@@ -64,15 +67,15 @@ public class PlantApp extends BGApp{
      */
 	@Override
 	public JPanel getMainPanel() {
-	
+		bgcanvas = BGCanvas.getInstance();
+	    
 		mainPanel = new JPanel();
     	mainPanel.setLayout(new BorderLayout());
-    	mainPanel.add(BorderLayout.NORTH, getNorthPanel());
+    	mainPanel.add(BorderLayout.NORTH, getNorthPanel(bgcanvas));
     	mainPanel.add(BorderLayout.SOUTH,getNorthPanel2());
     	mainPanel.add(BorderLayout.EAST,getEastPanel());
     	
-    bgPanel = new BGCanvas();
-    	mainPanel.add(BorderLayout.CENTER, bgPanel);
+    	mainPanel.add(BorderLayout.CENTER, bgcanvas);
     	
     	return mainPanel;
 	}
@@ -81,7 +84,7 @@ public class PlantApp extends BGApp{
 	 * Create a top panel that will hold control buttons
 	 * @return
 	 */
-    public JPanel getNorthPanel() {
+    public JPanel getNorthPanel(BGCanvas bgcanvas) {
     	northPanel = new JPanel();
     	northPanel.setLayout(new FlowLayout());
     	
@@ -98,16 +101,27 @@ public class PlantApp extends BGApp{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				
-					bggs = new BGGenerationSet(1,levelNo);
-					 t= new Thread(bggs);
+				BGGenerationSet bgg=new BGGenerationSet();
+				//BGCanvas canvas= BGCanvas.getInstance();
+				bgg.addObserver(bgcanvas);
+				//bgg.run();	
+			    t= new Thread(bggs);
+			    bgg=new BGGenerationSet(1,levelNo);
 					System.out.println("Start");
 					t.start();
-					System.out.println("Thread status: "+t.getState());
+					System.out.println("start done");
+					//slist1=bggs.printfirst();
+					/*System.out.println(bggs.slist1.size()+"- size");
+					//System.out.println("Thread status: "+t.getState());
 					
+					for(int i=1;i<slist1.size();i++) 
+					{
+					bgcanvas.printStem(slist1.get(i));
+					bgcanvas.repaint();
+					}
+					System.out.println("hi");
+					*/
 				
-					
-				//drawPanel.repaint();
 			}
 		}); // Allow the app to hear about button pushes
     	northPanel.add(startBtn);
@@ -388,8 +402,8 @@ public class PlantApp extends BGApp{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		PlantApp papp = new PlantApp();
 		
+		PlantApp papp = new PlantApp();
 		log.info("PlantApp started");
 	}
 

@@ -25,7 +25,7 @@ public class BGGenerationSet  extends Observable implements Runnable{
 	Stembg child2=new Stembg();
 	Stembg child3=new Stembg();
 	// Array list to store the stem instances 
-	static ArrayList<Stembg> slist1=new ArrayList<>(1090);
+	 ArrayList<Stembg> slist1=new ArrayList<>(1090);
 	static ArrayList<Stembg> slist2=new ArrayList<>(1090);
 	static ArrayList<StemList> s=new ArrayList<>(1090);
 	
@@ -49,15 +49,29 @@ public class BGGenerationSet  extends Observable implements Runnable{
 		this.option=option;
 		this.treeLevel=levels;
 		run();
+		
+	}
+	public ArrayList<Stembg> printfirst() {
+		
+		  Pattern1 p1= new Pattern1(3);
+		  slist1=p1.Pattern1(3);
+		  setChanged();
+		  notifyObservers(slist1);
+		  
+		System.out.println("\n_____________________________________________________________________________________________________________\n\n");
+		return slist1;
+		 
 	}
 	  public void run() {
 		  if(option==1) {
-		  Pattern1 p1= new Pattern1(treeLevel);
+		  Pattern1 p1= new Pattern1(3);
 		  System.out.println("etner3");
 		  setChanged();
 		  notifyObservers(slist1);
+		  
 		  System.out.println("etner4 ");
 		System.out.println("\n_____________________________________________________________________________________________________________\n\n");
+		 
 		  }
 		  else if(option==2) {
 		  Pattern2 p2= new Pattern2(treeLevel);

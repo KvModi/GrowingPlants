@@ -1,6 +1,7 @@
 package edu.neu.csye6200.bg;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observer;
 import java.util.logging.Logger;
 import java.awt.Color;
@@ -25,13 +26,21 @@ public class BGCanvas extends JPanel implements Observer {
 	private static BGCanvas bgcanvas=null;
 	BGGenerationSet bgg1 =new BGGenerationSet(1,3);
 	ArrayList<Stembg> slist1 = new ArrayList<>(); 
-	
+	int xin,yin;
+	Graphics2D g;
     /**
      * CellAutCanvas constructor
      */
-	public BGCanvas() {
-
+	private BGCanvas() {
+		
 		System.out.println("Singleton class created");
+	}
+	
+	public static BGCanvas getInstance() {
+		if(bgcanvas == null) {
+			bgcanvas = new BGCanvas();
+		}
+		return bgcanvas;
 	}
 
 	/**
@@ -52,13 +61,26 @@ public class BGCanvas extends JPanel implements Observer {
 		log.info("Drawing BG " + counter++);
 		Graphics2D g2d = (Graphics2D) g;
 		Dimension size = getSize();
-		
+		xin=size.width/2;
+		yin=size.height;
 		g2d.setColor(Color.white);
 		g2d.fillRect(0, 0, size.width, size.height);
-		BGGenerationSet bgg;
+		BGGenerationSet bgg=new BGGenerationSet(1,3);
 		g2d.setColor(Color.RED);
-		g2d.drawString("Plant app", 10, 15);
-	
+		g2d.drawString("Plant app",  size.width/2, size.height/2);
+		Stembg s= new Stembg();
+		Iterator<Stembg> iterator = bgg.slist1.iterator();
+		int j=0;
+		System.out.println("LOL");
+		while (iterator.hasNext()) {
+				
+				System.out.println("[][]"+s.toStringStem(iterator.next()));
+				g.setColor(Color.BLUE);;;
+				g.drawLine( 100*s.x1, 100*s.y1,100*s.x2,100*s.y2); 
+
+				
+		
+		}
 		
 		
 		//for (int j = 0; j < maxRows; j++) {
@@ -75,29 +97,29 @@ public class BGCanvas extends JPanel implements Observer {
 			   paintLine( g2d, startx, starty, endx, endy, col); 
 		   }*/
 		//}
-		if(bgg1!=null) {
-			Stembg s =new Stembg(0,0);
-				printStem(g2d,s);
-			
-
-		}
+		
 		
 	}
-	public void printStem(Graphics g,Stembg st) {
+	public void printStem(Stembg s) {
 		Graphics2D g2d = (Graphics2D) g;
 		System.out.println("Eneter 0");
-		if(!slist1.isEmpty()) {
-			System.out.println("Eneter 1");
-			for(Stembg s :slist1) {
+		
+			g.setColor(Color.BLUE);;;
+			g.drawLine( s.x1, s.y1,s.x2,s.y2); 
+
+			/*for(Stembg s :slist1) {
 				//int x=(int)(s.* 30 +(Math.cos(s.getDirection()))*s.getlen()* 30);  //updated x coordinate of child stem
 				//int y=(int)(s.getY()* 30+(Math.sin(s.getDirection()))*s.getlen()* 30);  //updated y coordinate of child stem
 System.out.println(s.id);
 				paintLine( g2d,s.x1, s.y1,s.x2,s.y2, Color.RED); 
 
 				
-			}
+			}*/
+			
+			
 
-		}
+		
+		
 	}
 	
 	/*
@@ -123,15 +145,31 @@ System.out.println(s.id);
 	 */
 	private void paintLine(Graphics2D g2d, int startx, int starty, int endx, int endy, Color color) {
 		g2d.setColor(color);
-		g2d.drawLine(startx, starty, endx, endy);
+		
+		for (int i=0;i<slist1.size();i++)
+		{
+		g2d.drawLine(slist1.get(i).x1, slist1.get(i).y1, slist1.get(i).x2, slist1.get(i).y2);
+		}
+	}
+	
+	BGCanvas(Stembg s){
+		System.out.println("Print");
+		paintLine(g,s.x1, s.y1, s.x2, s.y2,Color.BLACK);
+		
+		
 	}
 
-	@Override
-	public void update(java.util.Observable o, Object object) {
+	public void update(Observable o, Object object) {
 		System.out.println("Observer update method");
 		bgg1=(BGGenerationSet) object;
 		this.revalidate();
 		this.repaint();
+	}
+
+	@Override
+	public void update(java.util.Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
