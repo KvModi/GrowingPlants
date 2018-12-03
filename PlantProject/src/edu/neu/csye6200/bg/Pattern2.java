@@ -11,7 +11,7 @@ import java.util.Iterator;
  */
 public class Pattern2 extends BGGenerationSet{
 	BGCanvas canvas= new BGCanvas();
-	public Pattern2() {
+	public Pattern2(int treeLevel) {
 		int angleDeviation=25; // angle deviation from the parent stem 
 		int offset=slist1.size(); // the id will start after the previous plant's id
 		int multiplier=10;// for the height ratio of tree
@@ -25,7 +25,7 @@ public class Pattern2 extends BGGenerationSet{
 		//System.out.println("Root :"+stem.toStringStem(stem)+" "+stem.x1+" "+stem.y1);
 		//System.out.println("2 : "+stem.toStringStem(slist.get(0)));
 		// for loop to grow stems
-		for(int level=1;level<n;level++) {
+		for(int level=1;level<treeLevel;level++) {
 			for(int n=0;n<Math.pow(3,level-1);n++) {
 				
 				stem=slist2.get(k); // get the parent to create a  child

@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
 /**
  * @author krishnamodi
  *
  */
-public class Pattern1 extends BGGenerationSet {
-	public Pattern1() {
+public class Pattern1 extends BGGenerationSet implements Observable{
+	public Pattern1(int maxN) {
 		int angleDeviation=30; // angle deviation from the parent stem 
 		int multiplier=5;// for the height ratio of tree
 		
@@ -24,7 +27,7 @@ public class Pattern1 extends BGGenerationSet {
 		//System.out.println("Root :"+stem.toStringStem(stem)+" "+stem.x1+" "+stem.y1);
 		//System.out.println("2 : "+stem.toStringStem(slist.get(0)));
 		
-		for(int level=1;level<n;level++) {
+		for(int level=1;level<maxN;level++) {
 			for(int n=0;n<Math.pow(2,level-1);n++) {
 			stem=slist1.get(i); // get the parent to create a  child
 				i++;//to get the parent id // to get all ids to create their child stems
@@ -44,14 +47,9 @@ public class Pattern1 extends BGGenerationSet {
 		Iterator<Stembg> iterator = slist1.iterator();
 		int j=0;
 		while (iterator.hasNext()) {
-			try {
-				TimeUnit.SECONDS.sleep(01);
+			
 				System.out.println(stem.toStringStem(iterator.next()));
-				// how to call the draw method over here ???????????????????
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				
 			
 		
 		}
@@ -61,6 +59,18 @@ public class Pattern1 extends BGGenerationSet {
 		//create new instance of class
 		
 	
+	}
+
+	@Override
+	public void addListener(InvalidationListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeListener(InvalidationListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

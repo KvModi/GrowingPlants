@@ -1,5 +1,7 @@
 package edu.neu.csye6200.bg;
 
+import java.util.ArrayList;
+import java.util.Observer;
 import java.util.logging.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -7,23 +9,29 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
+import javafx.beans.Observable;
+
 /**
  * A sample canvas that draws a rainbow of lines
  * @author MMUNSON
  */
-public class BGCanvas extends JPanel {
+public class BGCanvas extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1L;
 	private Logger log = Logger.getLogger(BGCanvas.class.getName());
     private int lineSize = 20;
     private Color col = null;
     private long counter = 0L;
+	private static BGCanvas bgcanvas=null;
+	BGGenerationSet bgg1 =new BGGenerationSet(1,3);
+	ArrayList<Stembg> slist1 = new ArrayList<>(); 
 	
     /**
      * CellAutCanvas constructor
      */
 	public BGCanvas() {
-		col = Color.WHITE;
+
+		System.out.println("Singleton class created");
 	}
 
 	/**
@@ -34,6 +42,8 @@ public class BGCanvas extends JPanel {
 		drawBG(g); // Our Added-on drawing
     }
 	
+	
+	
 	/**
 	 * Draw the CA graphics panel
 	 * @param g
@@ -43,31 +53,51 @@ public class BGCanvas extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		Dimension size = getSize();
 		
-		g2d.setColor(Color.GREEN);
+		g2d.setColor(Color.white);
 		g2d.fillRect(0, 0, size.width, size.height);
-		
+		BGGenerationSet bgg;
 		g2d.setColor(Color.RED);
-		g2d.drawString("BG 2D", 10, 15);
+		g2d.drawString("Plant app", 10, 15);
+	
 		
-		int maxRows = size.height / lineSize;
-		int maxCols = size.width / lineSize;
 		
-		/*
-		for (int j = 0; j < maxRows; j++) {
-		   for (int i = 0; i < maxCols; i++) {
+		//for (int j = 0; j < maxRows; j++) {
+		  /* for (int i = 0; i < slist1.size(); i++) {
 			   int redVal = validColor(i*5);
-			   int greenVal = validColor(255-j*5);
-			   int blueVal = validColor((j*5)-(i*2));
+			   int greenVal = validColor(255-i*5);
+			   int blueVal = validColor((i*5)-(i*2));
 			   col = new Color(redVal, greenVal, blueVal);
 			   // Draw box, one pixel less to create a black outline
-			   int startx = i*lineSize;
-			   int starty = j*lineSize;
-			   int endx = startx + 15;
-			   int endy = starty + 15;
+			   int startx =slist1.get(i).x1;
+			   int starty = slist1.get(i).y1;
+			   int endx = slist1.get(i).x2;
+			   int endy = slist1.get(i).y2;
 			   paintLine( g2d, startx, starty, endx, endy, col); 
-		   }
+		   }*/
+		//}
+		if(bgg1!=null) {
+			Stembg s =new Stembg(0,0);
+				printStem(g2d,s);
+			
+
 		}
-		*/
+		
+	}
+	public void printStem(Graphics g,Stembg st) {
+		Graphics2D g2d = (Graphics2D) g;
+		System.out.println("Eneter 0");
+		if(!slist1.isEmpty()) {
+			System.out.println("Eneter 1");
+			for(Stembg s :slist1) {
+				//int x=(int)(s.* 30 +(Math.cos(s.getDirection()))*s.getlen()* 30);  //updated x coordinate of child stem
+				//int y=(int)(s.getY()* 30+(Math.sin(s.getDirection()))*s.getlen()* 30);  //updated y coordinate of child stem
+System.out.println(s.id);
+				paintLine( g2d,s.x1, s.y1,s.x2,s.y2, Color.RED); 
+
+				
+			}
+
+		}
 	}
 	
 	/*
@@ -95,5 +125,16 @@ public class BGCanvas extends JPanel {
 		g2d.setColor(color);
 		g2d.drawLine(startx, starty, endx, endy);
 	}
+
+	@Override
+	public void update(java.util.Observable o, Object object) {
+		System.out.println("Observer update method");
+		bgg1=(BGGenerationSet) object;
+		this.revalidate();
+		this.repaint();
+	}
+
+	
+	
 	
 }

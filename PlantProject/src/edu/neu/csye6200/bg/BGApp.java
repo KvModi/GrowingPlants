@@ -29,7 +29,7 @@ public abstract class BGApp implements ActionListener, WindowListener {
 	 */
     public void initGUI() {
     	frame = new JFrame();
-		frame.setTitle("BGApp");
+		frame.setTitle("PlantApp");
 
 		frame.setResizable(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //JFrame.DISPOSE_ON_CLOSE)
