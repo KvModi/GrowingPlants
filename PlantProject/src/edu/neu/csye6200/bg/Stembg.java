@@ -20,7 +20,7 @@ public class Stembg {
 		id=-1;
 		x1=0;
 		y1=0;
-		angle=-90;
+		angle=90;
 		id=-1;
 		
 		x2=(int) (Math.cos(Math.toRadians(angle)) * (20-level) * 10.0);

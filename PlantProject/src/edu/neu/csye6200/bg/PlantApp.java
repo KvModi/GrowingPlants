@@ -42,9 +42,11 @@ public class PlantApp extends BGApp{
 	protected JLabel label;
 	static int levelNo=3;
 	 ArrayList<Stembg> slist1;//=new ArrayList<>();
-		
+	
+	private BGGenerationSet bgg;
+	 
     private BGCanvas bgcanvas;// = BGCanvas.getInstance();
-	public BGGenerationSet bggs;
+	
 	Thread t=null;
 	Thread t2=null;
     
@@ -101,26 +103,18 @@ public class PlantApp extends BGApp{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				BGGenerationSet bgg=new BGGenerationSet();
-				//BGCanvas canvas= BGCanvas.getInstance();
+				bgg = new BGGenerationSet(1,levelNo);
+				bgg.option=1;
 				bgg.addObserver(bgcanvas);
-				//bgg.run();	
-			    t= new Thread(bggs);
-			    bgg=new BGGenerationSet(1,levelNo);
+				
+				
+			    t= new Thread(bgg);
+			    
+			    //bgg=new BGGenerationSet(1,levelNo);
 					System.out.println("Start");
 					t.start();
 					System.out.println("start done");
-					//slist1=bggs.printfirst();
-					/*System.out.println(bggs.slist1.size()+"- size");
-					//System.out.println("Thread status: "+t.getState());
 					
-					for(int i=1;i<slist1.size();i++) 
-					{
-					bgcanvas.printStem(slist1.get(i));
-					bgcanvas.repaint();
-					}
-					System.out.println("hi");
-					*/
 				
 			}
 		}); // Allow the app to hear about button pushes
@@ -207,16 +201,18 @@ public class PlantApp extends BGApp{
     	 */
     	northPanel2 = new JPanel();
     	northPanel2.setLayout(new FlowLayout());
-    	bggs = new BGGenerationSet(2,levelNo);
-   	//= new Thread(bggs);
-    	
+   	
 
     	startBtn2 = new JButton("Start Tree 2");
     	startBtn2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.out.println("Thread status: "+t2.getState());
-				
+				 BGGenerationSet bggs=new BGGenerationSet(2,levelNo);
+				bggs.option=1;
+				bggs.addObserver(bgcanvas);
+			    t= new Thread(bggs);
+			    
 				if(t2.isAlive()) {
 					System.out.println("The system is already running. Please click Resume");
 					t2.resume(); 

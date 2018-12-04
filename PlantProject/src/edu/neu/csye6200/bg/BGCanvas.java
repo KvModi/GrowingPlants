@@ -24,14 +24,15 @@ public class BGCanvas extends JPanel implements Observer {
     private Color col = null;
     private long counter = 0L;
 	private static BGCanvas bgcanvas=null;
-	BGGenerationSet bgg1 =new BGGenerationSet(1,3);
+	//BGGenerationSet bgg1 =new BGGenerationSet(1,3);
+	private BGGenerationSet bgg1;
 	ArrayList<Stembg> slist1 = new ArrayList<>(); 
 	int xin,yin;
 	Graphics2D g;
     /**
      * CellAutCanvas constructor
      */
-	private BGCanvas() {
+	BGCanvas() {
 		
 		System.out.println("Singleton class created");
 	}
@@ -58,27 +59,32 @@ public class BGCanvas extends JPanel implements Observer {
 	 * @param g
 	 */
 	public void drawBG(Graphics g) {
+		
 		log.info("Drawing BG " + counter++);
 		Graphics2D g2d = (Graphics2D) g;
 		Dimension size = getSize();
 		xin=size.width/2;
 		yin=size.height;
 		g2d.setColor(Color.white);
-		g2d.fillRect(0, 0, size.width, size.height);
-		BGGenerationSet bgg=new BGGenerationSet(1,3);
+	g2d.fillRect(0, 0, size.width, size.height);
+		 //bgg=new BGGenerationSet(1,3);
 		g2d.setColor(Color.RED);
 		g2d.drawString("Plant app",  size.width/2, size.height/2);
 		Stembg s= new Stembg();
-		Iterator<Stembg> iterator = bgg.slist1.iterator();
+		if(bgg1!=null) {
+		Iterator<Stembg> iterator = bgg1.slist1.iterator();
 		int j=0;
-		System.out.println("LOL");
+		
+		System.out.println("list size"+bgg1.slist1.size());
 		while (iterator.hasNext()) {
 				
-				System.out.println("[][]"+s.toStringStem(iterator.next()));
+				//System.out.println(s.toStringStem(iterator.next()));
+				s=(iterator.next());
 				g.setColor(Color.BLUE);;;
-				g.drawLine( 100*s.x1, 100*s.y1,100*s.x2,100*s.y2); 
+				System.out.println("data print: x1="+s.x1+" y1="+s.y1+ "  x2=" +s.x2+ " y2= " +s.y2);
+				g.drawLine( s.x1, s.y1,s.x2,s.y2); 
 
-				
+		}	
 		
 		}
 		
@@ -152,24 +158,25 @@ System.out.println(s.id);
 		}
 	}
 	
-	BGCanvas(Stembg s){
+	void printstem(Stembg s){
 		System.out.println("Print");
 		paintLine(g,s.x1, s.y1, s.x2, s.y2,Color.BLACK);
 		
 		
 	}
 
-	public void update(Observable o, Object object) {
-		System.out.println("Observer update method");
-		bgg1=(BGGenerationSet) object;
-		this.revalidate();
-		this.repaint();
-	}
-
 	@Override
 	public void update(java.util.Observable o, Object arg) {
-		// TODO Auto-generated method stub
+		System.out.println("Observer update method");
 		
+		if (arg instanceof BGGenerationSet) {
+			bgg1 = (BGGenerationSet) arg;
+			System.out.println("data rec size :"+bgg1.slist1.size());
+		} 
+		//slist1= (ArrayList<Stembg>) object;
+		System.out.println("data is"+arg);
+		this.revalidate();
+		this.repaint();
 	}
 
 	

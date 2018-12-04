@@ -18,8 +18,6 @@ public class Pattern1 extends BGGenerationSet implements Observable{
 	
 	
 	public Pattern1(int maxN) {
-		int angleDeviation=30; // angle deviation from the parent stem 
-		int multiplier=5;// for the height ratio of tree
 		
 		slist1.clear();//add(0,stem);
 		System.out.println("Tree 1 Details\n_______________\n");
